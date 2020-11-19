@@ -1,0 +1,94 @@
+module csr-nfvo {
+
+  namespace "http://example.com/csr-nfvo";
+  prefix csr-nfvo;
+
+  import ietf-inet-types {
+    prefix inet;
+  }
+  import tailf-common {
+    prefix tailf;
+  }
+  import tailf-ncs {
+    prefix ncs;
+  }
+
+  description
+    "Function pack that creates a CSR VNF and instantiate a day1 service once it is ready";
+
+  revision 2016-01-01 {
+    description
+      "Initial revision.";
+  }
+
+  list csr-nfvo {
+    description "This is an nfvo example service";
+    uses ncs:service-data;
+    ncs:servicepoint csr-nfvo-servicepoint;
+    key name;
+    leaf name {
+      tailf:info "Unique deployment id";
+      tailf:cli-allow-range;
+      type string;
+    }
+    leaf mgmt_gateway {
+      type inet:ipv4-address;
+    }
+    leaf mgmt_ip {
+      type inet:ipv4-address;
+    }
+    leaf mgmt_netmask {
+      type inet:ipv4-address;
+    }
+    leaf mgmt_mac {
+      type string;
+    }
+    leaf host {
+      type string;
+    }
+    leaf datastore{
+      type string;
+    }
+    tailf:action start_deployment {
+      tailf:actionpoint start-deployment-action;
+      input {}
+      output {
+        leaf result {
+          type string;
+        }
+      }
+    }
+    container day1_config {
+      // A better approach is to import the model instead of re-defining it.
+        list interface {
+          key id;
+          leaf id {
+            type string;
+          }
+          leaf ip_address{
+            type inet:ipv4-address; 
+          }
+          leaf netmask{
+            type inet:ipv4-address; 
+          }
+        }
+        container ospf {
+          leaf process {
+            type string;
+          }
+          leaf area {
+            type string;
+          }
+        }
+        tailf:action push {
+        tailf:actionpoint push-day1-service-action;
+        input {}
+        output {
+          leaf result {
+            type string;
+          }
+        }
+      }
+    } 
+  }
+}

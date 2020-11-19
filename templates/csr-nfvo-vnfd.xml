@@ -1,0 +1,71 @@
+<config-template xmlns="http://tail-f.com/ns/config/1.0">
+  <nfv xmlns="urn:etsi:nfv:yang:etsi-nfv-descriptors">
+    <vnfd>
+      <id>virtual-router</id>
+      <provider>cisco</provider>
+      <product-name>Cloud Services Router</product-name>
+      <software-version>1.0</software-version>
+      <version>1.0</version>
+      <vnfm-info>esc</vnfm-info>
+      <vdu>
+        <id>csr</id>
+        <name>cloud services router</name>
+        <int-cpd>
+          <id>int-left</id>
+          <interface-id xmlns="http://cisco.com/ns/nso/cfp/cisco-etsi-nfvo">2</interface-id>
+        </int-cpd>
+        <int-cpd>
+          <id>int-mgmt</id>
+          <interface-id xmlns="http://cisco.com/ns/nso/cfp/cisco-etsi-nfvo">1</interface-id>
+          <management xmlns="http://cisco.com/ns/nso/cfp/cisco-etsi-nfvo"/>
+        </int-cpd>
+        <int-cpd>
+          <id>int-right</id>
+          <interface-id xmlns="http://cisco.com/ns/nso/cfp/cisco-etsi-nfvo">3</interface-id>
+        </int-cpd>
+        <device-type xmlns="http://cisco.com/ns/nso/cfp/cisco-etsi-nfvo">
+          <cli>
+            <ned-id>cisco-ios-cli-6.64</ned-id>
+          </cli>
+        </device-type>
+      </vdu>
+      <ext-cpd>
+        <id>left</id>
+        <int-cpd>
+          <vdu-id>csr</vdu-id>
+          <cpd>int-left</cpd>
+        </int-cpd>
+      </ext-cpd>
+      <ext-cpd>
+        <id>mgmt</id>
+        <int-cpd>
+          <vdu-id>csr</vdu-id>
+          <cpd>int-mgmt</cpd>
+        </int-cpd>
+      </ext-cpd>
+      <ext-cpd>
+        <id>right</id>
+        <int-cpd>
+          <vdu-id>csr</vdu-id>
+          <cpd>int-right</cpd>
+        </int-cpd>
+      </ext-cpd>
+      <df>
+        <id>basic</id>
+        <vdu-profile>
+          <id>csr</id>
+          <min-number-of-instances>1</min-number-of-instances>
+          <max-number-of-instances>1</max-number-of-instances>
+        </vdu-profile>
+        <instantiation-level>
+          <id>basic</id>
+          <vdu-level>
+            <vdu-id>csr</vdu-id>
+            <number-of-instances>1</number-of-instances>
+          </vdu-level>
+        </instantiation-level>
+        <default-instantiation-level>basic</default-instantiation-level>
+      </df>
+    </vnfd>
+  </nfv>
+</config-template>
